@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Dados - Controle de Saúde</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="registro.html">Registrar</a></li>
+            <li><a href="peso.html">Peso</a></li>
+            <li><a href="gordura.html">Gordura</a></li>
+            <li><a href="massa.html">Massa Muscular</a></li>
+            <li><a href="dieta.html">Plano de Dieta</a></li>
+            <li><a href="estatisticas.php">Estatísticas do cliente</a></li>
+            <li><a href="clientela.html">Clientela</a></li>
+        </ul>
+    </nav>
+    <div class="container mt-5">
+        <h1 class="text-center">Registrar Dados</h1>
+        <form id="registroForm" action="registro.php" method="POST" class="mt-4">
+            <div class="form-group">
+                <label for="id_cliente">Id do Cliente:</label>
+                <input type="number" step="1" id="id_cliente" name="id_cliente" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="dataRegistro">Data:</label>
+                <input type="date" id="dataRegistro" name="data" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="peso">Peso (kg):</label>
+                <input type="number" id="peso" name="peso" step="0.1" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="gordura">Gordura (%):</label>
+                <input type="number" id="gordura" name="gordura" step="0.1" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="massa">Massa Muscular (kg):</label>
+                <input type="number" id="massa" name="massa" step="0.1" class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-success btn-block">Registrar</button>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('registroForm');
+
+        // Define a data atual no campo de data
+        document.getElementById('dataRegistro').value = new Date().toISOString().split('T')[0];
+
+        form.addEventListener('submit', function(event) {
+            // O formulário será enviado ao PHP e não armazenaremos no localStorage
+            // Não é necessário fazer nada aqui a não ser enviar os dados
+        });
+    </script>
+</body>
+</html>

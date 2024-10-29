@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Controle de Saúde</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        .record {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .delete-btn {
+            background-color: transparent;
+            height: 42px;
+            width: 42px;
+            border: 2px solid red;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="peso.html">Peso</a></li>
+            <li><a href="gordura.html">Gordura</a></li>
+            <li><a href="massa.html">Massa Muscular</a></li>
+            <li><a href="dieta.html">Plano de Dieta</a></li>
+            <li><a href="estatisticas.php">Estatísticas do cliente</a></li>
+        </ul>
+    </nav>
+    <div class="content">
+        <h1>Registros</h1>
+        
+        <div id="registrosContainer"></div>
+
+        <!-- Modal -->
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <p id="modal-text"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Função para carregar registros do MySQL
+        function loadRegistros() {
+            fetch('load_registros.php')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Erro na rede: ${response.status} ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .then(registros => {
+                    const registrosContainer = document.getElementById('registrosContainer');
+                    registrosContainer.innerHTML = ''; // Limpa o container
+
+                    registros.forEach(registro => {
+                        const registroDiv = document.createElement('div');
+                        registroDiv.className = 'record';
+
+                        // Converte data e hora para exibir no formato correto
+                        const data = new Date(registro.data + ' ' + registro.hora);
+                        const dataFormatada = data.toLocaleDateString('pt-BR');
+                        const horaFormatada = data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+                        // Exibe os registros no formato desejado
+                        registroDiv.innerHTML = `
+                            <span onclick="openModal('${dataFormatada}', '${horaFormatada}', ${registro.peso}, ${registro.gordura}, ${registro.massa})">
+                                Registro: ${dataFormatada} às ${horaFormatada}
+                            </span>
+                            <button class="delete-btn" onclick="deleteRegistro(${registro.id}, this)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        `;
+                        registrosContainer.appendChild(registroDiv);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar registros:', error);
+                    alert(`Ocorreu um erro ao carregar os registros: ${error.message}`);
+                });
+        }
+
+        // Função para deletar o registro
+        function deleteRegistro(id, btn) {
+            console.log('Tentando deletar o registro com ID:', id); // Debug: Verificando o ID
+            if (confirm('Tem certeza de que deseja deletar este registro?')) {
+                fetch(`delete_registro.php?id=${id}`, { method: 'GET' })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Erro ao deletar: ${response.status} ${response.statusText}`);
+                        }
+                        return response.json();
+                    })
+                    .then(result => {
+                        if (result.success) {
+                            const registroDiv = btn.parentNode;
+                            registroDiv.remove(); // Remove o registro da interface
+                            alert('Registro deletado com sucesso!');
+                        } else {
+                            alert('Falha ao deletar o registro: ' + result.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro ao deletar o registro:', error);
+                        alert(`Erro ao deletar o registro: ${error.message}`);
+                    });
+            }
+        }
+
+
+        function openModal(data, hora, peso, gordura, massaMuscular) {
+            const modal = document.getElementById("myModal");
+            const modalText = document.getElementById("modal-text");
+            modalText.innerHTML = `
+                <b>Data:</b> ${data || 'Não atribuída'}<br>
+                <b>Hora:</b> ${hora || 'Não atribuída'}<br>
+                <b>Peso:</b> ${peso !== null ? peso + ' Kg' : 'Não atribuído'}<br>
+                <b>Gordura:</b> ${gordura !== null ? gordura + '%' : 'Não atribuída'}<br>
+                <b>Massa Muscular:</b> ${massaMuscular !== null ? massaMuscular + ' Kg' : 'Não atribuída'}
+            `;
+            modal.style.display = "flex"; // Exibe o modal
+        }
+
+        function closeModal() {
+            const modal = document.getElementById("myModal");
+            modal.style.display = "none"; // Oculta o modal
+        }
+
+        // Fecha o modal quando o usuário clica fora dele
+        window.onclick = function(event) {
+            const modal = document.getElementById("myModal");
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Carrega registros ao abrir a página
+        window.onload = loadRegistros;
+    </script>
+</body>
+</html>

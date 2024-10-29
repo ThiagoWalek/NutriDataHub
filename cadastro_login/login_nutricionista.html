@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Nutricionista</title>
+    <link rel="stylesheet" href="style.css"> <!-- Certifique-se de que o caminho para o CSS está correto -->
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login Nutricionista</h1>
+        <form action="processa_login_nutricionista.php" method="POST"> <!-- Altere "processa_login.php" para o nome do arquivo de processamento -->
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
+            </div>
+            <div class="form-group">
+                 <label for="password">Senha</label><!--estava tentando pegar  o valor do campo password, porém tinha de ter alterado para senha, um dos erros mais dificeis até agora foi tão sdimples de resolver -->
+                <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+            </div>
+            <button type="submit">Entrar</button>
+        </form>
+    </div>
+</body>
+</html>

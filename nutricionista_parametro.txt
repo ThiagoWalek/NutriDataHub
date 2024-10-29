@@ -1,0 +1,21 @@
+Circuferência da coxa 
+Circuferência da panturrilha 
+Circuferência do quadril
+Circuferência do braço 
+Circuferência do antebraço
+Circuferência toraxica
+
+
+Cliente: Gráficos_biopedancia  grafico_medidas  Estatisticas 
+
+grafico_medidas - braco, coxa...
+grafico_biopedancia - peso, gordura e massa muscular.
+Estatisticas - seu peso e todas os ultimos registros feitos pelo nutricionista
+
+nutricionista: Registros_biopedancia, registros_medidas, Estatisticas
+
+Registros_biopedancia - ele irá consultar de todos seus pacientes de um id especifico irá consultar o peso, gordura e massa muscular.
+Registros_medidas - ele irá consultar de todos seus pacientes de um id especifico irá consultar suas circuferencias
+
+Estatisticas - ele o própio nutricionista ira consultar o peso e todas as ultimas medidas feitas pelo nutricionista
+

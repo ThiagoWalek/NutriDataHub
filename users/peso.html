@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peso - Controle de Saúde</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="peso.html">Peso</a></li>
+            <li><a href="gordura.html">Gordura</a></li>
+            <li><a href="massa.html">Massa Muscular</a></li>
+            <li><a href="dieta.html">Plano de Dieta</a></li>
+            <li><a href="estatisticas.php">Estatísticas do cliente</a></li>
+        </ul>
+    </nav>
+    <div class="content">
+        <h1>Peso</h1>
+
+        <label for="dateRange">Mostrar dados de:</label>
+        <select id="dateRange" onchange="updateChart()">
+            <option value="7">Últimos 7 dias</option>
+            <option value="30">Últimos 30 dias</option>
+            <option value="12">Últimos 12 meses</option>
+        </select>
+
+        <canvas id="massaChart"></canvas>
+    </div>
+
+    <script>
+        let massaChart; // Variável para o gráfico
+
+        // Função para processar os dados e gerar o gráfico
+        function processarDados(dados, dias) {
+            const labels = [];
+            const data = [];
+            const hoje = new Date();
+
+            if (dias === '12') {
+                // Filtro para os últimos 12 meses (mesmo dia de cada mês)
+                let mesAtual = hoje.getMonth();
+                let anoAtual = hoje.getFullYear();
+                const diaAtual = hoje.getDate();
+
+                for (let i = 0; i < 12; i++) {
+                    const dataReferencia = new Date(anoAtual, mesAtual, diaAtual);
+                    const dataFormatada = dataReferencia.toISOString().split('T')[0];
+                    labels.unshift(dataFormatada);
+
+                    const registroMes = dados.find(r => r.data.startsWith(dataFormatada.slice(0, 7)));
+                    if (registroMes) {
+                        data.unshift(registroMes.massa);
+                    } else {
+                        data.unshift(null); // Insere null para meses sem dados
+                    }
+
+                    mesAtual--;
+                    if (mesAtual < 0) {
+                        mesAtual = 11;
+                        anoAtual--;
+                    }
+                }
+            } else {
+                // Filtro para últimos 7 ou 30 dias
+                const diasAtras = parseInt(dias, 10);
+                const dataLimite = new Date(hoje);
+                dataLimite.setDate(hoje.getDate() - diasAtras);
+
+                dados.forEach(registro => {
+                    const dataRegistro = new Date(registro.data);
+                    // Verifica se a data do registro é dentro do intervalo desejado
+                    if (dataRegistro >= dataLimite && dataRegistro <= hoje) {
+                        labels.push(dataRegistro.toISOString().split('T')[0]); // Formata a data
+                        data.push(registro.massa);
+                    }
+                });
+            }
+
+            const ctx = document.getElementById('massaChart').getContext('2d');
+            if (massaChart) {
+                massaChart.destroy(); // Destroi o gráfico anterior
+            }
+
+            massaChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Peso (kg)',
+                        data: data,
+                        borderColor: 'black',
+                        borderWidth: 2,
+                        spanGaps: true // Mantém gráfico contínuo com dados ausentes
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Função para buscar dados do servidor via AJAX
+        function buscarDados(dias) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', `load_registros.php?dias=${dias}`, true);
+            xhr.onload = function () {
+                if (this.status === 200) {
+                    const dados = JSON.parse(this.responseText);
+                    processarDados(dados, dias); // Processa os dados recebidos
+                }
+            };
+            xhr.send();
+        }
+
+        // Função para atualizar o gráfico com base na seleção do filtro
+        function updateChart() {
+            const selectedRange = document.getElementById('dateRange').value;
+            buscarDados(selectedRange); // Busca os dados com base no filtro
+        }
+
+        // Carrega os últimos 7 dias por padrão ao abrir a página
+        window.onload = function () {
+            buscarDados(7);
+        };
+    </script>
+</body>
+</html>

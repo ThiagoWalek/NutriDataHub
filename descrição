@@ -1,0 +1,22 @@
+Parte do Nutricionista:
+
+Cadastro: O nutricionista se cadastra com nome, e-mail e senha.
+Login: Acesso via e-mail e senha.
+Funções:
+Registro de Dados Físicos:
+Formulário 1: Registros de peso, gordura corporal e massa muscular. Os registros são feitos com base no ID do cliente e incluem dados, horário de registro e valores de peso, gordura e massa muscular, sendo todos os campos obrigatórios.
+Formulário 2: Registros de medidas de benefícios corporais. Este formulário coleta dados de braço, quadríceps, panturrilha, antebraço, tórax e abdômen. Assim como no Formulário 1, os dados são registrados com base no ID do cliente e incluem os dados e o horário do registro.
+Visualização dos Registros:
+Ambos os formulários possuem áreas de visualização dos registros. Cada área exibe vários modais, inicialmente fechados, que, ao serem clicados, mostram os detalhes do registro:
+Para o Formulário 1: ID do cliente, dados de registro, horário, peso, gordura e massa muscular.
+Para o Formulário 2: ID do cliente, dados do registro, horário e as medidas de drogas (braço, quadríceps, panturrilha, antebraço, tórax, abdômen).
+Filtro de Pacientes: Na página de filtragem, o nutricionista pode buscar pacientes por ID. A busca exibe um modal com todas as últimas informações cadastradas para aquele cliente.
+Filtrar nos Registros: Ambos os formulários permitem filtrar registros por ID de cliente, exibindo os registros feitos pelo nutricionista para o cliente correspondente.
+Parte do Cliente:
+
+Cadastro: O cliente se cadastra com nome, peso, idade, gênero, altura, e-mail e senha.
+Login: Acesso via e-mail e senha.
+Visualização de Registros em Gráficos:
+O cliente pode ver todos os registros feitos pelo nutricionista na forma de gráficos, com opções de visualização para os últimos 30 dias ou 12 meses.
+Cada gráfico representa um parâmetro específico: peso, gordura corporal, massa muscular, e medidas de certas (braço, quadríceps, antebraço, tórax, cintura).
+Estatísticas: Na aba de estatísticas, o cliente visualiza todas as suas últimas ou únicas estatísticas registradas.

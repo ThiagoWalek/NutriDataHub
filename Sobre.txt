@@ -1,0 +1,9 @@
+Meu site é um site onde tem a parte de cadastro e login do nutricionista:
+Cadastro: nome, email e senha
+login: email e senha
+O nutricionista terá as seguintes funções registros de peso, gordura e massa muscular e a outra parte com registros de circuferências de braço, quadríceps, panturrilha, antebraço, torax, abdomen, tambem terá a opção de cadastrar um cliente, todos esses cadastros terão como base o id do cliente para registrar um registro, todos registros serão obrigatórios, terá um formulario de data, peso, gordura e massa e o horário em que cadastrou, e outro formulário para registros de data, braco, panturrilha, biceps, antebraco, torax,, terá dois campos de visualizações dos registros um do primeiro formulário e outro para o seugundo essa página irá mostrar vários modais fechados e quando pressionados irão mostrar, id do cliente, data do registro, hora, peso, gordura e massa, já os registros feitos no outro formulário irão mostrar, id do cliente, data, hora e todas as medidas de circuferências restantes. O nutricionista também terá uma página para filtrar seus pacientes por id onde ele abrirá um modal e mostrará todas as últimas ou unicas informações cadastradas pelo nutricionista em um determinado cliente. Nos formulários de registros terá um filtro onde dará para filtrar por id todos os registros feitos por aquele nutricionista.
+
+Parte do cliente:
+Cadastro: Nome, peso, idade, genero, altura, email, senha
+login: email e senha
+O cliente verá todos os registros feitos pelo nutricionista em forma de gráficos com datas 30 ultimos dias, 12 ultimos meses, terá um gráfico para cada como um para peso, um para gordura, massa muscular, braço em cm, quadriceps, antebraço, torax, cintura... e tambem verá na aba estatisticas todas as suas ultimas ou unicas estatisticas.

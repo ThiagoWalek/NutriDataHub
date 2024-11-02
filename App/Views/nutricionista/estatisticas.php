@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 // Conexão ao banco de dados
 $servername = "localhost";
 $username = "root";
@@ -55,7 +55,7 @@ if ($id_buscado) {
 
 
 $conn->close();
-?>
+?> -->
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -64,7 +64,7 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estatísticas do Paciente</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/app/public/css/style.css">
     <style>
         .stats-card {
             background-color: #f8f9fa;

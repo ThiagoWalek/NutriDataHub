@@ -1,0 +1,30 @@
+Estrutura inicial do projeto:
+
+app/(diretório principal da aplicação)
+    controllers/(controladores)
+            NutricionistaController.php
+            ClienteController.php
+            RegistroController.php
+    models/(modelos)
+        Nutricionista.php
+        Cliente.php
+        RegistroPesoGorduraMassa.php
+        RegistroCircunferencia.php
+    views/(visualizações)
+        nutricionista/(páginas para o nutricionista)
+        login.php
+        cadastro.php
+        dashboard.php
+        registros.php
+        clientes.php
+        estatisticas.php
+    cliente/(páginas para o cliente)
+        login.php
+        cadastro.php
+        dashboard.php
+        estatisticas.php
+    config/(configurações do banco de dados)
+        database.php
+    public/(arquivos públicos como CSS, JS, index.php)
+    routes/(definições de rotas)
+        web.php

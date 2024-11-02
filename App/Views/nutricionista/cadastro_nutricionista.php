@@ -1,4 +1,31 @@
-<?php
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Nutricionista</title>
+    <link rel="stylesheet" href="/app/public/css/style.css">
+
+</head>
+<body>
+    <h1>Cadastro de Nutricionista</h1>
+    <form action="processa_cadastro_nutricionista.php" method="POST">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="senha">Senha:</label>
+        <input type="password" id="senha" name="senha" required>
+
+        <button type="submit">Cadastrar Nutricionista</button>
+    </form>
+</body>
+</html>
+
+
+<!-- <?php
 session_start(); // Iniciar sessão para mensagens de feedback (opcional)
 
 // Configurações de conexão com o banco de dados
@@ -48,4 +75,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-?>
+?> -->

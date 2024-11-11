@@ -1,0 +1,137 @@
+Use BioStatix;
+
+CREATE TABLE registros (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    data DATE NOT NULL,
+    horario TIME NOT NULL,  -- Adicionando a coluna para o horário
+    peso DECIMAL(5,2) NOT NULL,
+    gordura DECIMAL(5,2),
+    massa DECIMAL(5,2),
+    id_cliente INT,  -- Adicionando a coluna id_usuario
+    CONSTRAINT fk_cliente FOREIGN KEY (id_cliente) REFERENCES clientes(id),
+	id_nutricionista INT,  -- Adicionando a coluna id_usuario
+    CONSTRAINT fk_nutricionista FOREIGN KEY (id_nutricionista) REFERENCES nutricionistas(id)
+);
+
+
+CREATE TABLE nutricionistas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    senha VARCHAR(255) NOT NULL, -- Armazenar senhas hashed
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE clientes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    genero VARCHAR(20) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    senha VARCHAR(255) NOT NULL, -- Armazenar senhas hashed
+    idade INT NOT NULL, -- Coluna idade
+    altura DECIMAL(4,2) NOT NULL, -- Coluna altura (em metros, por exemplo, 1.75)
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE circunferencias (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    data DATE NOT NULL,
+    horario TIME NOT NULL,
+    braco DECIMAL(5,2) NOT NULL,
+    antebraco DECIMAL(5,2) NOT NULL,
+    torax DECIMAL(5,2) NOT NULL,
+    cintura DECIMAL(5,2) NOT NULL,
+    abdomen DECIMAL(5,2) NOT NULL,
+    quadril DECIMAL(5,2) NOT NULL,
+    coxa DECIMAL(5,2) NOT NULL,
+    panturrilha DECIMAL(5,2) NOT NULL,
+    id_cliente INT,  -- Adicionando a coluna id_cliente para referência do cliente
+    CONSTRAINT fk_cliente_circ FOREIGN KEY (id_cliente) REFERENCES clientes(id),
+    id_nutricionista INT,  -- Adicionando a coluna id_nutricionista para referência do nutricionista
+    CONSTRAINT fk_nutricionista_circ FOREIGN KEY (id_nutricionista) REFERENCES nutricionistas(id)
+);
+
+
+
+
+Select * from registros;
+Select * from circunferencias;
+Select * from clientes;
+Select * from nutricionistas;
+SELECT * FROM nutricionistas WHERE email = "carlos.silva@example.com" AND senha = "SenhaSegura123";
+
+
+drop table registros;
+drop table clientes;
+
+
+-- Registro 1: Cliente 1 e Nutricionista 1
+INSERT INTO registros (data, horario, peso, gordura, massa, id_cliente, id_nutricionista) 
+VALUES ('2024-10-24', '08:30:00', 75.5, 18.2, 40.0, 1, 1);
+
+-- Registro 2: Cliente 2 e Nutricionista 1
+INSERT INTO registros (data, horario, peso, gordura, massa, id_cliente, id_nutricionista) 
+VALUES ('2024-10-24', '09:15:00', 70.3, 20.0, 38.5, 2, 1);
+
+-- Registro 3: Cliente 3 e Nutricionista 1
+INSERT INTO registros (data, horario, peso, gordura, massa, id_cliente, id_nutricionista) 
+VALUES ('2024-10-24', '10:00:00', 68.0, 19.8, 39.0, 3, 1);
+
+-- Registro 4: Cliente 4 e Nutricionista 2
+INSERT INTO registros (data, horario, peso, gordura, massa, id_cliente, id_nutricionista) 
+VALUES ('2024-10-24', '10:45:00', 68.2, 22.5, 35.8, 4, 2);
+
+-- Registro 5: Cliente 5 e Nutricionista 2
+INSERT INTO registros (data, horario, peso, gordura, massa, id_cliente, id_nutricionista) 
+VALUES ('2024-10-24', '11:30:00', 72.4, 21.0, 37.2, 5, 2);
+
+-- Registro 6: Cliente 6 e Nutricionista 2
+INSERT INTO registros (data, horario, peso, gordura, massa, id_cliente, id_nutricionista) 
+VALUES ('2024-10-24', '12:15:00', 80.0, 23.0, 36.5, 6, 2);
+
+-- Registro 7: Cliente 7 e Nutricionista 3
+INSERT INTO registros (data, horario, peso, gordura, massa, id_cliente, id_nutricionista) 
+VALUES ('2024-10-24', '13:00:00', 82.7, 20.1, 38.5, 7, 3);
+
+-- Registro 8: Cliente 8 e Nutricionista 3
+INSERT INTO registros (data, horario, peso, gordura, massa, id_cliente, id_nutricionista) 
+VALUES ('2024-10-24', '14:00:00', 77.3, 19.5, 39.8, 8, 3);
+
+-- Registro 9: Cliente 9 e Nutricionista 3
+INSERT INTO registros (data, horario, peso, gordura, massa, id_cliente, id_nutricionista) 
+VALUES ('2024-10-24', '15:30:00', 85.2, 24.0, 37.0, 9, 3);
+
+
+
+
+INSERT INTO nutricionistas (nome, email, senha) 
+VALUES 
+    ('Carlos Silva', 'carlos.silva@example.com', 'SenhaSegura123'),
+    ('Mariana Oliveira', 'mariana.oliveira@example.com', 'SenhaForte456'),
+    ('Roberto Souza', 'roberto.souza@example.com', 'SenhaProtegida789');
+
+UPDATE nutricionistas 
+SET senha = CASE 
+    WHEN email = 'carlos.silva@example.com' THEN 'SenhaSegura123'
+    WHEN email = 'mariana.oliveira@example.com' THEN 'SenhaForte456'
+    WHEN email = 'roberto.souza@example.com' THEN 'SenhaProtegida789'
+END
+WHERE email IN ('carlos.silva@example.com', 'mariana.oliveira@example.com', 'roberto.souza@example.com');
+
+
+
+
+INSERT INTO clientes (nome, genero, email, senha, idade, altura, data_criacao) VALUES
+('João Silva', 'Masculino', 'joao.silva@example.com', '$2y$10$8rGhV0yxUZV1Kn0jZ23Xqeom5dzAl./doxnWtvZ9QhNTkp/d0VVS6', 25, 1.80, NOW()),
+('Maria Oliveira', 'Feminino', 'maria.oliveira@example.com', '$2y$10$0xF8LQzOgVPfyL3T/9Xf4eAQnMbbEx2As29B8E/.yquxXylGX/xWa', 30, 1.65, NOW()),
+('Carlos Pereira', 'Masculino', 'carlos.pereira@example.com', '$2y$10$tJmbwyp0fULBZ9.ZBjVEouafKpmUlTEHK6z6hNcsPUMjms5eOggA6', 28, 1.75, NOW()),
+('Ana Souza', 'Feminino', 'ana.souza@example.com', '$2y$10$BLj.HwhMupI2/CxQ2dMI7OY2mM0IXrUAB7Q/cnDO.0bXrBBzZMBey', 22, 1.70, NOW()),
+('Felipe Costa', 'Masculino', 'felipe.costa@example.com', '$2y$10$MRQAG1GrV/dcx9tI5eM39eOszFujCoM3sgnLgGjD23vXIOADCDpae', 35, 1.85, NOW()),
+('Juliana Ferreira', 'Feminino', 'juliana.ferreira@example.com', '$2y$10$gHqjYFYDDd5cShKLx.C9rA3zD1aaXv8uCxk5EQ4PIiXH2.jHQ1CfO', 27, 1.60, NOW()),
+('Gabriel Santos', 'Masculino', 'gabriel.santos@example.com', '$2y$10$dQ.F5Zg6j/QHgLFZ7Jzm4Odj6Q6gf6dnKJfOHoj7L2FVQUCPkEUGK', 24, 1.78, NOW()),
+('Bianca Almeida', 'Feminino', 'bianca.almeida@example.com', '$2y$10$F1pZ4YOMLvMNHL7gV8oSUeKmQ0HVZl3jTSdxaXujXHk9Qb1mG.VMu', 26, 1.72, NOW()),
+('Lucas Martins', 'Masculino', 'lucas.martins@example.com', '$2y$10$pLSU0XrdhgIujA4wbmTYgeH8dr8gHAp6FbZnYRsE8bIgJmZDzXJOu', 29, 1.82, NOW()),
+('Fernanda Lima', 'Feminino', 'fernanda.lima@example.com', '$2y$10$dcwLdwmTQUw.e4.X0A8KSOED5mniZQ8mOYdrtwt5DKCZJmj5TrzoC', 33, 1.68, NOW());
+
+
+
